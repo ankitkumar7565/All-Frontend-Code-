@@ -1,0 +1,34 @@
+package com.example.managementtask
+
+import android.content.Intent
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.managementtask.Data.SessionManager
+
+class SplashScreen : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_splash_screen)
+        val session = SessionManager(this)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            if (session.isLoggedIn()) {
+                // ✅ User already logged in
+                startActivity(Intent(this, Dashboard::class.java))
+            } else {
+                // ✅ New user
+                startActivity(Intent(this, Registration::class.java))
+            }
+
+            finish()
+        }, 2000)
+
+    }
+}
